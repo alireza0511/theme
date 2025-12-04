@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:theme/theme/mosaic_theme_data.dart';
 import 'theme/theme_provider.dart';
 
 void main() {
@@ -12,7 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AppThemeProvider(),
+      create: (_) => AppThemeProvider(
+        lightTheme: MosaicThemeData.lightTheme,
+        darkTheme: MosaicThemeData.darkTheme,
+      ),
       child: Consumer<AppThemeProvider>(
         builder: (context, themeProvider, child) {
           return MaterialApp(
@@ -55,7 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: [
           IconButton(
-            icon: Icon(context.isDarkTheme ? Icons.light_mode : Icons.dark_mode),
+            icon: Icon(
+              context.isDarkTheme ? Icons.light_mode : Icons.dark_mode,
+            ),
             onPressed: context.themeProvider.toggleTheme,
             tooltip: 'Toggle theme',
           ),
@@ -90,9 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            
+
             context.verticalSpaceXL,
-            
+
             // Counter demo
             Card(
               child: Padding(
@@ -102,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     context.titleText('Counter Demo', large: true),
                     context.verticalSpaceSM,
-                    context.bodyText('You have pushed the button this many times:'),
+                    context.bodyText(
+                      'You have pushed the button this many times:',
+                    ),
                     context.verticalSpaceLG,
                     Center(
                       child: context.currencyText(
@@ -135,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            
+
             context.verticalSpaceXL,
-            
+
             // Color showcase
             Card(
               child: Padding(
@@ -147,9 +155,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     context.titleText('Brand Colors', large: true),
                     context.verticalSpaceMD,
-                    _buildColorRow('Sample Green', context.colors.huntingtonGreen),
+                    _buildColorRow(
+                      'Sample Green',
+                      context.colors.huntingtonGreen,
+                    ),
                     context.verticalSpaceSM,
-                    _buildColorRow('Sample Blue', context.colors.huntingtonBlue),
+                    _buildColorRow(
+                      'Sample Blue',
+                      context.colors.huntingtonBlue,
+                    ),
                     context.verticalSpaceSM,
                     _buildColorRow('Primary', context.colors.primary),
                     context.verticalSpaceSM,
@@ -164,9 +178,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            
+
             context.verticalSpaceXL,
-            
+
             // Typography showcase
             Card(
               child: Padding(
@@ -184,7 +198,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     context.verticalSpaceSM,
                     context.bodyText('Body text for reading content'),
                     context.verticalSpaceSM,
-                    context.bodyText('Label text for UI elements', large: false),
+                    context.bodyText(
+                      'Label text for UI elements',
+                      large: false,
+                    ),
                     context.verticalSpaceSM,
                     context.brandDisplayText('Brand Display'),
                     context.verticalSpaceSM,
@@ -195,9 +212,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            
+
             context.verticalSpaceXL,
-            
+
             // Interactive elements
             Card(
               child: Padding(
@@ -207,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     context.titleText('Interactive Elements', large: true),
                     context.verticalSpaceMD,
-                    
+
                     // Buttons
                     context.bodyText('Buttons:'),
                     context.verticalSpaceSM,
@@ -230,11 +247,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ],
                     ),
-                    
+
                     context.verticalSpaceLG,
                     const Divider(),
                     context.verticalSpaceLG,
-                    
+
                     // Form elements
                     context.bodyText('Form elements:'),
                     context.verticalSpaceMD,
@@ -260,9 +277,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-            
+
             context.verticalSpaceXL,
-            
+
             // Footer
             Center(
               child: Column(
@@ -290,12 +307,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  
+
   Widget _buildColorRow(String name, dynamic color) {
     // Extract color value for display
-    final colorValue = color is Color ? color.value : (color as dynamic)._materialValue;
+    final colorValue = color is Color
+        ? color.value
+        : (color as dynamic)._materialValue;
     final displayColor = Color(colorValue);
-    
+
     return Row(
       children: [
         Container(
@@ -305,14 +324,14 @@ class _MyHomePageState extends State<MyHomePage> {
             color: displayColor,
             borderRadius: BorderRadius.circular(4),
             border: Border.all(
-              color: Color(context.colors.outline._materialValue).withOpacity(0.2),
+              color: Color(
+                context.colors.outline._materialValue,
+              ).withOpacity(0.2),
             ),
           ),
         ),
         context.horizontalSpaceSM,
-        Expanded(
-          child: context.bodyText(name),
-        ),
+        Expanded(child: context.bodyText(name)),
         context.bodyText(
           '#${colorValue.toRadixString(16).substring(2).toUpperCase()}',
           color: context.colors.textSecondary,
